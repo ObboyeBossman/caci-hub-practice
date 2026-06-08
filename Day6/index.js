@@ -1,107 +1,94 @@
-// const members = [
-//     "Kwame",
-//     "Ama",
-//     "Kofi"
-// ];
 
-// console.log(members);
-
-// console.log(members[0]);
-// console.log(members[1]);
-// console.log(members[2]);
-
-
-// console.log(members.length);
-
-// members.push("Abraham");
-
-// console.log(members);
-
-// members.pop();
-
-// console.log(members);
-
-// members.unshift("Bossman");
-
-// console.log(members);
-
-// members.shift();
-
-// console.log(members);
-
-// console.log(members.includes("Bossman"));
-
-// console.log(members.indexOf("Ama"));
-// console.log(members.indexOf("John"));
-
-// // Explaining arrary.shift() and array.unshift()
-// // shift() removes the first element from an array and returns that removed element. This method changes the length of the array.
-// // unshift() adds one or more elements to the beginning of an array and returns the new length of the array. This method changes the length of the array.
-
-// // Explaining array.splice()
-// // splice() changes the contents of an array by removing or replacing existing elements and/or adding new elements in place. This method changes the length of the array.
-// // Give example of array.splice()
-// const fruits = ["Apple", "Banana", "Cherry", "Date", "Elderberry"];
-
-// // Remove 2 elements starting from index 1
-// fruits.splice(1, 2);
-// console.log(fruits);
-
-// // Explaining array.reduce()
-// // reduce() executes a reducer function on each element of the array, resulting in a single output value.
-// // Give example of array.reduce()
-// const numbers = [1, 2, 3, 4, 5];
-// const sum = numbers.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-// console.log(sum); // Output: 15
+const member = {
+  id: "m001",
+  fullName: "Kwame Asante",
+  gender: "male",
+  status: "active",
+  household: {
+    id: "h001",
+    name: "Asante Household",
+    address: "Kumasi, Ghana",
+    isPrimary: true,
+  },
+  assembly: {
+    id: "a001",
+    name: "Accra Central Assembly",
+    region: "Greater Accra",
+  },
+  contact: {
+    phone: "+233241234567",
+    email: "kwame@example.com",
+  },
+};
 
 
+// OBJECT DESTRUCTURING
+const {fullName, status, gender} = member;
+const {assembly : {name : assemblyName}} = member;
+const {assembly : {region}} = member;
+const {assembly} = member;
 
 
-// Part 4: filter()
-// const activeMembers =
-//     members.filter(member => member.status === "active");
+// FUNCTION PARAMETER DESTRUCTURING
+function getMemberLocation({fullName, assembly : {name, region}}){
+  return `${fullName} — ${name} — ${region}`;
+}
+console.log(getMemberLocation(member));
 
-// console.log(activeMembers);
-
-// Get Active Female Names
-// const activeFemaleNames = members
-//   .filter(member => member.gender === "female" && member.status === "active")
-//   .map(member => member.name);
-
-// console.log(activeFemaleNames);
+// SPREAD
 
 
-// // Reduce:
-// // reduce() turns an array into a single value.
-// const statusCounts = members.reduce(
-//   (counts, member) => {
+const changes = {
+  id: "m001",
+  fullName: "Kwame Asante",
+  gender: "male",
+  status: "inactive",
+  household: {
+    id: "h001",
+    name: "Asante Household",
+    address: "Accra, Ghana",
+    isPrimary: true,
+  },
+  assembly: {
+    id: "a001",
+    name: "Accra Central Assembly",
+    region: "Greater Accra",
+  },
+  contact: {
+    phone: "+233240330123",
+    email: "kwameasante@example.com",
+  },
+};
 
-//     counts[member.status] =
-//       (counts[member.status] || 0) + 1;
+function updateMember(member, changes){
+   const updatedMember = {
+      ...member,
+      ...changes
+   }
 
-//     return counts;
+   return updatedMember;
+}
 
-//   },
-//   {}
-// );
-
-// console.log(statusCounts);
+const newStatus = updateMember(member, changes).status
+console.log(newStatus);
+console.log(member.status);
 
 
-console.clear();
-
+// REST
 const members = [
-  { name: "Kwame Asante", status: "active", gender: "male", assembly: "Accra Central" },
-  { name: "Ama Owusu", status: "visitor", gender: "female", assembly: "Kumasi North" },
-  { name: "Kofi Mensah", status: "inactive", gender: "male", assembly: "Accra Central" },
-  { name: "Abena Sarpong", status: "active", gender: "female", assembly: "Accra Central" },
-  { name: "Yaw Boateng", status: "active", gender: "male", assembly: "Kumasi North" },
-  { name: "Akua Frimpong", status: "visitor", gender: "female", assembly: "Takoradi" },
+  { fullName: "Ama Owusu", status: "active", gender: "female" },
+  { fullName: "Kofi Mensah", status: "inactive", gender: "male" },
+  { fullName: "Akosua Boateng", status: "visitor", gender: "female" },
+  { fullName: "Yaw Appiah", status: "active", gender: "male" },
+  { fullName: "Adwoa Nyarko", status: "active", gender: "female" },
+  { fullName: "Kojo Antwi", status: "visitor", gender: "male" },
+  { fullName: "Abena Ofori", status: "inactive", gender: "female" },
+  { fullName: "Kwaku Frimpong", status: "active", gender: "male" },
+  { fullName: "Efua Sarpong", status: "active", gender: "female" },
+  { fullName: "Nana Yeboah", status: "visitor", gender: "male" },
+  { fullName: "Akua Amoako", status: "active", gender: "female" }
 ];
 
-// Uppercass all names
-const upperNames = members.map(
-    (m) => m.name.toUpperCase()
-);
-
-console.log(upperNames);
+function addMember(members, newMember){
+  return [newMember, ...members];
+}
